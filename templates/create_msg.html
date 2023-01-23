@@ -1,0 +1,9 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+   <form class="room-form col-sm-4 mx-auto my-4 p-3 bg-info bg-gradient" method='POST' action=''>
+       {% csrf_token %}   
+        {{form.as_p}}
+       <input type='submit' value="Submit" />
+   </form>
+{% endblock content %}

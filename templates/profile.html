@@ -1,0 +1,118 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %} 
+<section class="row justify-content-around align-items-start">
+   <div class="bg-light shadow-lg col-md-4 m-3 p-3 border-2 border">
+   <div class="border-bottom text-center mb-2">
+      <img  class="img-responsive img-thumbnail border border-2 " src="{{user.profile.image.url}}">
+      <h4>{{user.username}}</h4>
+   </div>
+   <form method="POST" class="">
+      {% csrf_token %} 
+      {{u_form.as_p}}
+      {{p_form.as_p}}
+      <div class="form-group">
+         <button class="btn btn-outline-primary" type="submit">Update</button>
+      </div>
+   </form>
+   </div>
+   <div class="bg-light shadow-lg col-md-4 m-3 p-3 border-2 border">
+      <div>
+      <ol class="list-group list-group-numbered">
+         <li class="list-group-item d-flex justify-content-between align-items-start">
+           <div class="ms-2 me-auto">
+             <div class="fw-bold">Challenges</div>
+             created by you
+           </div>
+           <span class="badge bg-primary rounded-pill">{{challenges_count}}</span>
+         </li>
+         <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Goals</div>
+              challenges you currently participated
+            </div>
+            <span class="badge bg-primary rounded-pill">{{goals_count}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Queries</div>
+              Queries you posted 
+            </div>
+            <span class="badge bg-primary rounded-pill">{{rooms_count}}</span>
+          </li>
+      </ol> 
+   </div>
+      <div class="my-4">
+         <h4>recent activity</h4>
+         {% for msg in messages %} 
+         <ul class="list-group">
+            <li class="list-group-item">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">{{msg.room}}</div>
+                {{msg.body}} <a href="{% url 'room' msg.room.id %}">view more</a>
+              </div>
+              <span class="badge  rounded-pill text-muted f-right">{{msg.updated}}</span>
+            </li>
+         </ul> 
+         {% endfor %}
+      </div>
+   </div>
+   <div class="bg-dark shadow-lg col-md-8 text-muted">
+      <div class="d-flex justify-content-between m-2">
+         <h4 class="text-muted">Your posts </h4>
+         <a href="{% url 'create_room' %}" class="btn btn-outline-warning fw-bold text-transform">create post</a>
+     </div>
+      {% for room in rooms %}
+      <div class="my-2 btn bg-light" style="width:100%;display:block;text-align: left;">
+         <div class="d-flex align-items-center">
+         <div class="d-flex justify-content-start align-items-center ">
+             <img style="width:50px;height:50px;border-radius:50%;display:inline" src="{{room.host.profile.image.url}}">
+             <h5 class="mx-2">{{room.host.username}}</h5>
+         </div>
+         {% if request.user == room.host %} 
+         <div class="d-flex justify-content-between align-items-center" style="margin-left:auto;">
+             <a class="text-decoration-none py-0 mx-2 imagehoverstyle" href="{% url 'update_room' room.id %}"><img style="width:25px;color:black;" src="{% static 'images/editicon.png' %}"></a>
+             <a class="text-decoration-none py-0 imagehoverstyle" href="{% url 'delete_room' room.id %}"><img style="width:25px;color:black;" src="{% static 'images/deleteicon.png' %}"></a>
+         </div>
+         {% endif %}
+        </div>
+         <div class="">
+             <a href="{% url 'room' room.id %}" class="d-block fw-bold fs-4">{{room.name}}</a>
+             <p class="">{{room.description}}</p>
+             <footer class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{room.topic}}</small>
+                <small class="text-muted">{{room.updated}}</small>
+             </footer>
+         </div>
+     </div>
+      {% endfor %}
+   </div>
+   <div class="col-md-8 col-11">
+      <div class="d-flex justify-content-between m-2">
+         <h4 class="text-muted">Your challenges</h4>
+         <a href="{% url 'create_challenge' %}" class="btn btn-outline-warning fw-bold text-transform">create challenge</a>
+     </div>
+   <div class="d-flex justify-content-around align-items-center">
+   {% for challenge in challenges %} 
+   <div class="m-2 cardhover shadow-lg mx-auto" style="width: 18rem;">
+    <img class="card-img-top img-thumbnail img-responsive" src="{{challenge.image.url}}" />
+    <div class="card-body">
+      <h5 class="card-title">{{challenge.title}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted"><small>created by </small><a class='text-muted' href='{% url 'profile' %}' >{{challenge.user.username}}</a></h6>
+      <p class="card-text">{{challenge.description}}</p>
+      <div class="d-flex justify-content-between align-items-center">
+          <p class="card-subtitle text-muted">{{challenge.updated}} - {{challenge.id}}</p>
+          {% if request.user == challenge.user %} 
+                <div class="d-flex justify-content-between align-items-center" style="margin-left:auto;">
+                    <a onclick="" class="text-decoration-none py-0 mx-2 imagehoverstyle" href="{% url 'challenge_update' challenge.id %}"><img style="width:25px;color:black;" src="{% static 'images/editicon.png' %}"></a>
+                    <a class="text-decoration-none py-0 imagehoverstyle" href="{% url 'challenge_delete' challenge.id %}"><img style="width:25px;color:white;background-color:inherit;" src="{% static 'images/deleteicon.png' %}"></a>
+                </div>
+            {% endif %}
+      </div>
+    </div>
+  </div>
+   {% endfor %}
+</div>
+   </div>
+</section>
+{% endblock content %}

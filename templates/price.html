@@ -1,0 +1,51 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %} 
+<div class="container-lg bg-light my-3">
+    <p class="text-muted p-3">Upload an image to know the disease and suitable treatment methods</p>
+    <form id="upload-file" class="p-3" method="post" enctype="multipart/form-data" style="width:400px;">
+        {% csrf_token %}
+        <label for="imageUpload" class="upload-label">
+            Upload image
+        </label>
+        <input class="btn btn-outline-primary form-control my-2" type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+        <input class="test-btn form-control my-2 text-dark" type='submit' value='predict' onclick="document.getElementById('preloader').classList.toggle('loadclass')" />
+    </form>
+    {% if not url %} 
+    <div id="preloader" class="container-lg bg-light my-3 loadclass">
+        <h2 class="text-muted my-2 border-bottom p-3">Result</h2>
+        <div class="text-center">
+          <img class="text-center" src="{% static 'images/loader.gif' %}" alt="loading" style="background-color: inherit";/>
+        </div>
+        <!-- <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div> -->
+    </div>
+    {% endif %}
+    {% if url %} 
+    <div class="container-lg bg-light my-3 p-3">
+        <h2 class="text-muted my-2 border-bottom p-3">Result</h2>
+    <div class="row justify-content-around align-items-start" >
+    <div class="col-lg-4">
+        <img class="img-fluid img-thumbnail rounded m-1" src="{{url}}" class="card-img-top" alt="...">
+    </div>
+    <div class="card col-lg-5 text-center bg-light" >
+        <div class="card-body">
+            <h5 class="card-title"><span class="text-muted">Identified disease : </span><span style="color:darkgreen;">{{disease}}</span></h5>
+            <p class="card-text text-white"><span class="text-muted">Accuracy : </span><span style="color:darkgreen;">{{accuracy}}%</span></p>
+            <a href="#" class="test-btn text-dark">know more</a>
+          </div>
+    </div>
+    </div>
+    <div class="container-lg bg-light">
+        {% for key,value in info.items %} 
+        <div class="my-1">
+            <h4 class="my-2 border-bottom p-3">{{key}}</h4>
+            <p class="f-3">{{value}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %} 
+<section class="row justify-content-around mt-2">
+    <div class="col-md-3 shadow-lg bg-light bg-gradient">
+        <h3 class="text-muted">Browse topics</h3>
+        <ul class="list-group">
+        {% for topic in topics %} 
+           <a class="list-group-item btn d-block btn-outline-success header1" href="{% url 'forum' %}?q={{topic.name}}">{{topic.name}}</a>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-8 shadow-lg border-rounded">
+        <div class="d-flex justify-content-between m-2">
+            <p class="text-muted">@{{topics_count}} topics available</p>
+            <a href="{% url 'create_room' %}" class="btn btn-primary">Post</a>
+        </div>
+        <div class="">
+            {% if rooms_count == 0 %} 
+            <h5 class="text-center text-muted">No posts under this topic</h5>
+            {% endif %}
+            {% for room in rooms %}
+            <div class="my-2 bg-light p-2 card" style="">
+                <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start align-items-center">
+                    <img class="img-responsive mx-2" style="width:50px;height:50px;border-radius:50%;display:inline" src="{{room.host.profile.image.url}}">
+                    <div>
+                        <h5 class="mx-2" style="margin-bottom:0">{{room.host.username}}</h5>
+                        <p class="text-muted text-black mt-0">@{{room.host.first_name}} {{room.host.last_name}}</p>
+                    </div>
+                </div>
+                {% if request.user == room.host %} 
+                <div class="d-flex justify-content-between align-items-center" style="margin-left:auto;">
+                    <a class="text-decoration-none py-0 mx-2 imagehoverstyle" href="{% url 'update_room' room.id %}"><img style="width:25px;color:black;" src="{% static 'images/editicon.png' %}"></a>
+                    <a class="text-decoration-none py-0 imagehoverstyle" href="{% url 'delete_room' room.id %}"><img style="width:25px;color:black;" src="{% static 'images/deleteicon.png' %}"></a>
+                </div>
+                {% endif %}
+               </div>
+                <div class="">
+                    <a href="{% url 'room' room.id %}" class="d-block fw-bold fs-4 my-2">{{room.name}}</a>
+                    <p class="text-black fw-bolder">{{room.description}}</p>
+                    <footer class="d-flex justify-content-between align-items-center">
+                       <small class="text-muted">{{room.topic}}</small>
+                       <small class="text-muted">{{room.updated}}</small>
+                    </footer>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,80 @@
+
+{% load static %}
+<div id="carouselExampleDark" class="carousel carousel-dark slide my-3" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="10000">
+        <img src="{% static 'images/slide1.jpg' %}" class="d-block sliderimg" alt="...">
+        <div class="carousel-caption d-none d-md-block bgtransparent">
+          <figure class="mb-0">
+            <blockquote class="blockquote">
+              <p class="pb-2" style="color:black;font-weight: bold;">
+                “Let us not forget that the cultivation of the earth is the most important labor of man. When tillage begins, other arts follow. The farmers, therefore, are the founders of human civilization.”
+              </p>
+            </blockquote>
+            <figcaption class="blockquote-footer mb-0 text-dark">
+              Daniel Webster
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="carousel-item" data-bs-interval="2000">
+        <img src="{% static 'images/slide2.jpg' %}" class="d-block sliderimg" alt="...">
+        <div class="carousel-caption d-none d-md-block bgtransparent">
+          <figure class="mb-0">
+            <blockquote class="blockquote">
+              <p class="pb-2" style="color:black;font-weight: bold;">
+                “Agriculture is our wisest pursuit because it will in the end contribute most to real wealth, good morals, and happiness.”
+              </p>
+            </blockquote>
+            <figcaption class="blockquote-footer mb-0 text-dark">
+              Thomas Jefferson
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/slide3.jpg' %}" class="d-block sliderimg" alt="...">
+        <div class="carousel-caption d-none d-md-block bgtransparent">
+          <figure class="mb-0">
+            <blockquote class="blockquote">
+              <p class="pb-2" style="color:black;font-weight: bold;">
+                “Agriculture is the noblest of all alchemy; for it turns earth, and even manure, into gold, conferring upon its cultivator the additional reward of health.”
+              </p>
+            </blockquote>
+            <figcaption class="blockquote-footer mb-0 text-dark">
+              Paul Chatfield
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/slide4.jpeg' %}" class="d-block sliderimg" alt="...">
+        <div class="carousel-caption d-none d-md-block bgtransparent">
+          <figure class="mb-0">
+            <blockquote class="blockquote" >
+              <p class="pb-2" style="color:black;font-weight: bold;">
+                “A reasonable agriculture would do its best to emulate nature. Rather than change the earth to suit a crop it would diversify its crops to suit the earth.”
+              </p>
+            </blockquote>
+            <figcaption class="blockquote-footer mb-0 text-dark">
+              Verlyn Klinkenborg
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button> -->
+  </div>

@@ -1,0 +1,55 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %} 
+<div class="row justify-content-around my-3 align-items-start">
+    <div class="col-md-3 shadow-lg bg-light bg-gradient">
+        <div style="">
+        <h3 class="text-muted">Browse categories</h3>
+        <ul class="list-group my-2">
+        {% for category in categories %} 
+           <a class="list-group-item btn d-block btn-primary fw-bold" href="{% url 'workouts' category.id %}">{{category.name}}</a>
+        {% endfor %}
+        </ul>
+       </div>
+    </div>
+    <div class="col-md-7 shadow-lg bg-light bg-gradient text-info" style="">
+        <div>
+            {% for workout in workouts %} 
+             <a class="text-decoration-none" href="#{{workout.name}}"><small class="badge rounded-pill bg-info text-dark">{{workout.name}}</small></a>
+            {% endfor %}
+        </div>
+         {% for workout in workouts %} 
+           <div id="{{workout.name}}" class="box-element bg-dark shadow-lg p-2 m-2">
+                 <h3 class="">{{workout.name}}</h3>
+                 <small class="badge  rounded-pill bg-info text-muted">{{workout.repeat}} repetitions</small>
+                 <small class="badge  rounded-pill text-light bg-primary">{{workout.sets}} sets</small>   
+                 <div class="card my-2">
+                     <div class="card-body">
+                     <img style="margin:0 auto;display:block;" class="card-img-left img-responsive img-thumbnail border border-1" src="{{workout.image.url}}">
+                    </div>
+                     <div class="card-body">
+                         <h5 class="text-warning">How to do...</h5>
+                         <pre>
+                         <p class="text-muted fw-bold text-wrap">{{workout.description}}</p></pre>
+                    </div>
+                 </div>
+           </div>
+         {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+
+<!-- <div id="{{workout.name}}" class="box-element bg-dark shadow-lg p-2 m-2">
+    <h3 class="">{{workout.name}}</h3>
+    <small class="badge  rounded-pill bg-info text-muted">{{workout.repeat}} repetitions</small>
+    <small class="badge  rounded-pill text-light bg-primary">{{workout.sets}} sets</small>   
+    <div class="d-flex justify-content-around align-items-start my-2">
+        <div class="col-md-5">
+        <img style="" class="card-img-top img-responsive img-thumbnail" src="{{workout.image.url}}">
+       </div>
+        <div class="col-md-5">
+            <h5 class="text-warning">How to do...</h5>
+            <p class="text-muted fw-bold">{{workout.description}}</p>
+       </div>
+    </div>
+</div> -->

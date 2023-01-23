@@ -1,0 +1,79 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %} 
+<div class="row justify-content-around my-3 align-items-start">
+    <div class="col-md-3 shadow-lg bg-light bg-gradient">
+        <div>
+        <h3 class="text-muted">Browse topics</h3>
+        <ul class="list-group">
+        {% for topic in topics %} 
+           <a class="list-group-item btn d-block btn-outline-success header1" href="{% url 'forum' %}?q={{topic.name}}">{{topic.name}}</a>
+        {% endfor %}
+        </div>
+        </ul>
+    </div>
+    <div class="col-md-7 bg-gradient bg-light p-1">
+        <div>
+            <div class="my-2 btn" style="width:100%;display:block;text-align: left;background-color: #00e0c6;">
+                <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start align-items-center ">
+                    <img style="width:50px;height:50px;border-radius:50%;display:inline" src="{{room.host.profile.image.url}}">
+                    <h5 class="mx-2">{{room.host.username}}</h5>
+                </div>
+                {% if request.user == room.host %} 
+                <div class="d-flex justify-content-between align-items-center" style="margin-left:auto;">
+                    <a class="text-decoration-none py-0 mx-2 imagehoverstyle" href="{% url 'update_room' room.id %}"><img style="width:25px;color:black;" src="{% static 'images/editicon.png' %}"></a>
+                    <a class="text-decoration-none py-0 imagehoverstyle" href="{% url 'delete_room' room.id %}"><img style="width:25px;color:black;" src="{% static 'images/deleteicon.png' %}"></a>
+                </div>
+                {% endif %}
+               </div>
+                <div class="">
+                    <h4 class="d-block">{{room.name}}</h4>
+                    <p class="fs-bold">{{room.description}}</p>
+                    <footer class="d-flex justify-content-between align-items-center">
+                       <small class="text-muted">{{room.topic}}</small>
+                       <small class="text-muted">{{room.updated}}</small>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="p-3" style="">
+            {% if msg_count == 0 %} 
+            <h5 class="text-center text-muted">No responses</h5>
+            {% endif %}
+            <div class="my-3 py-2 px-1 border-3">
+                {% if request.user.is_authenticated %}
+                <form class="" method='POST' action="">
+                  <h5 class="text-muted">comment</h5>
+                  {% csrf_token %} 
+                  <input class="px-1 mb-1" style="d-block;width:100%;" type='text' name='body' placeholder="write your message here..." ></input>
+                  <button class="btn btn-outline-primary" class='d-block' style="" type="submit">Submit</button>
+                </form>
+               {% endif %}
+            </div>
+            {% for msg in messages %}
+            <div class="my-2 border-bottom p-2" style="width:100%;display:block;text-align: left;">
+                <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-start align-items-center ">
+                    <img style="width:50px;height:50px;border-radius:50%;display:inline" src="{{msg.user.profile.image.url}}">
+                    <h5 class="mx-2 text-success">{{msg.user.username}}</h5>
+                </div>
+                {% if request.user == msg.user %} 
+                <div class="d-flex justify-content-between align-items-center" style="margin-left:auto;">
+                    <a onclick="" class="text-decoration-none py-0 mx-2 imagehoverstyle" href="{% url 'update_msg' msg.id %}"><img style="width:25px;color:black;" src="{% static 'images/editicon.png' %}"></a>
+                    <a class="text-decoration-none py-0 imagehoverstyle" href="{% url 'delete_message' msg.id %}"><img style="width:25px;color:white;background-color: white;" src="{% static 'images/deleteicon.png' %}"></a>
+                </div>
+                {% endif %}
+               </div>
+                <div class="">
+                    <p class="">{{msg.body}}</p>
+                    <footer class="d-flex justify-content-between align-items-center">
+                       <small class="text-muted">{{msg.updated}}</small>
+                    </footer>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
